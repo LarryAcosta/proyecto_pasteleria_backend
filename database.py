@@ -1,24 +1,30 @@
-# database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from config import get_settings
 
-# URL de la base de datos SQLite (se creará el archivo pasteleria.db en la carpeta del proyecto)
-SQLALCHEMY_DATABASE_URL = "sqlite:///./pasteleria.db"
+settings = get_settings()
 
-# Motor de conexión
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Necesario para SQLite en modo multi-hilo
-)
+# Crear el motor de base de datos usando la URL del .env
+# Para SQLite necesitamos el connect_args especial
+if settings.database_url.startswith("sqlite"):
+    engine = create_engine(
+        settings.database_url,
+        connect_args={"check_same_thread": False},
+        echo=settings.debug
+    )
+else:
+    # Para Postgres u otros motores no hace falta connect_args
+    engine = create_engine(
+        settings.database_url,
+        echo=settings.debug
+    )
 
-# Sesión de base de datos
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Clase base para los modelos
 Base = declarative_base()
 
 
-# Dependencia para obtener la sesión en los endpoints
+# Dependencia para inyectar la sesión de BD en los endpoints
 def get_db():
     db = SessionLocal()
     try:

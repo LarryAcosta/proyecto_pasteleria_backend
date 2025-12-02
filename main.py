@@ -1,26 +1,28 @@
 from fastapi import FastAPI
+from database import Base, engine
+from config import get_settings
+from routers import pedidos  # nuestro router de pedidos
 
-from database import engine
-import models
+# Leer configuración desde .env
+settings = get_settings()
 
-from routers import pedidos
-
-
-# Crear las tablas en la base de datos al iniciar la app
-models.Base.metadata.create_all(bind=engine)
-
+# Crear la aplicación FastAPI usando datos del .env
 app = FastAPI(
-    title="API Pastelería",
-    description="Backend para gestión de pedidos de pastelería",
-    version="1.0.0",
+    title=settings.app_name,
+    debug=settings.debug
 )
 
-app.include_router(pedidos.router)
-
+# Crear las tablas en la base de datos (solo para desarrollo)
+Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
-def inicio():
-    return {"mensaje": "API de Pastelería funcionando correctamente"}
+def read_root():
+    return {
+        "message": "API Pastelería funcionando",
+        "env": settings.app_env
+    }
 
 
+# Incluir los endpoints de pedidos
+app.include_router(pedidos.router, prefix="/pedidos", tags=["Pedidos"])
