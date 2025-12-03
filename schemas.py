@@ -48,3 +48,61 @@ class PedidoOut(PedidoBase):
 
     class Config:
         orm_mode = True
+
+
+class ClienteBase(BaseModel):
+    nombre: str
+    telefono: str
+
+
+class ClienteCreate(ClienteBase):
+    """Datos que recibimos al crear un cliente"""
+    pass
+
+
+class ClienteResponse(ClienteBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class ProductoBase(BaseModel):
+    nombre: str
+    tipo: str | None = None
+    precio_base: float
+
+
+class ProductoCreate(ProductoBase):
+    pass
+
+
+class ProductoResponse(ProductoBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class PedidoBase(BaseModel):
+    cliente_id: int | None = None
+    producto_id: int | None = None
+    cliente: str
+    telefono: str
+    producto: str
+    sabor: str
+    tamano: str
+    precio: float
+    fecha_entrega: date
+    estado: EstadoPedido | None = None
+
+
+class PedidoCreate(PedidoBase):
+    pass
+
+
+class PedidoResponse(PedidoBase):
+    id: int
+
+    class Config:
+        orm_mode = True

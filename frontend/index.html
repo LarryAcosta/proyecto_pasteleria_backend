@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Pedidos - Pastelería</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f5f5;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    form {
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    label {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    input, select {
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .estado-pill {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Pedidos - Pastelería</h1>
+
+    <h2>Crear nuevo pedido</h2>
+    <!-- Aquí luego conectamos el JS -->
+    <form id="form-pedido">
+      <div>
+        <label>Cliente</label>
+        <input type="text" id="cliente" required />
+      </div>
+      <div>
+        <label>Teléfono</label>
+        <input type="text" id="telefono" required />
+      </div>
+      <div>
+        <label>Producto</label>
+        <input type="text" id="producto" required />
+      </div>
+      <div>
+        <label>Sabor</label>
+        <input type="text" id="sabor" required />
+      </div>
+      <div>
+        <label>Tamaño</label>
+        <input type="text" id="tamano" placeholder="1 libra, 1/2 libra..." required />
+      </div>
+      <div>
+        <label>Precio</label>
+        <input type="number" id="precio" step="0.01" required />
+      </div>
+      <div>
+        <label>Fecha de entrega</label>
+        <input type="date" id="fecha_entrega" required />
+      </div>
+      <div>
+        <label>Estado</label>
+        <select id="estado">
+          <option value="pendiente">Pendiente</option>
+          <option value="en_preparacion">En preparación</option>
+          <option value="entregado">Entregado</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Guardar pedido</button>
+      </div>
+    </form>
+
+    <h2>Listado de pedidos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Producto</th>
+          <th>Fecha entrega</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-pedidos">
+        <!-- Aquí irá el JS llenando filas -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Luego creamos este archivo -->
+  <script src="/static/main.js"></script>
+</body>
+</html>
