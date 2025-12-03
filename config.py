@@ -1,17 +1,13 @@
-from pydantic_settings import BaseSettings
 from functools import lru_cache
+import os
 
 
-class Settings(BaseSettings):
-    # Valores por defecto para que NO falle si no hay variables de entorno
-    app_name: str = "Pasteleria API"
-    app_env: str = "production"
-    debug: bool = False
-    database_url: str = "sqlite:///./pasteleria.db"
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+class Settings:
+    def __init__(self):
+        self.app_name = os.getenv("APP_NAME", "Pasteleria API")
+        self.app_env = os.getenv("APP_ENV", "production")
+        self.debug = os.getenv("DEBUG", "false").lower() == "true"
+        self.database_url = os.getenv("DATABASE_URL", "sqlite:///./pasteleria.db")
 
 
 @lru_cache
